@@ -44,15 +44,22 @@ def xy (fname, x, y):
         ind += 1
     return df_xy
 
-df_new = xy('PakistanSuicideAttacks_modified.csv', 'Year', 'Kills')
+
+# Modify between here
+x = 'Month'
+y = 'Kills'
+title = 'Deaths resulting from suicide bombings in Pakistan each year'
+# And here
+
+df_new = xy('PakistanSuicideAttacks_modified.csv', x, y)
 
 plt.figure()
 
-years = list(df_new['Year'])
-kills = list(df_new['Kills'])
+years = list(df_new[x])
+kills = list(df_new[y])
 
 plt.plot(years,kills)
-plt.xlabel('Year')
-plt.ylabel('Kills')
-plt.title('Deaths resulting from suicide bombings in Pakistan each year')
+plt.xlabel(x)
+plt.ylabel(y)
+plt.title(title)
 plt.show()
