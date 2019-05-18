@@ -18,7 +18,7 @@ new_target = []
 new_kills = []
 new_injures = []
 new_temperature = []
-with open('PakistanSuicideAttacks_raw.csv') as csvfile:
+with open('PakistanSuicideAttacks_raw.csv', encoding="utf8", errors='ignore') as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=',')
     for i,row in enumerate(csv_reader,-1):
         length = i
