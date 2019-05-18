@@ -48,7 +48,7 @@ def xy (fname, x, y):
 # Modify between here
 x = 'Month'
 y = 'Kills'
-title = 'Deaths resulting from suicide bombings in Pakistan each year'
+title = 'Deaths resulting from suicide bombings in Pakistan each month from 1995 to 2018'
 # And here
 
 df_new = xy('PakistanSuicideAttacks_modified.csv', x, y)

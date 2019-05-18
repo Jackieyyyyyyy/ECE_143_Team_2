@@ -28,24 +28,20 @@ kill_list = list(heatmap_data_dict['Kills'])
 year_loc_pair_list = []
 
 for row in range(len(year_list)):
+    for char in kill_list[row]:
+        isnum = True
+        if not char.isdigit():
+            isnum = False
     if [year_list[row],loc_type_list[row]] not in year_loc_pair_list:
         year_loc_pair_list.append([year_list[row],loc_type_list[row]])
         heatmap_data_dict_cleaned['Year'].append(year_list[row])
         heatmap_data_dict_cleaned[y_axis].append(loc_type_list[row])
-        for char in kill_list[row]:
-            isnum = True
-            if not char.isdigit():
-                isnum = False
         if isnum:
             heatmap_data_dict_cleaned['Kills'].append(int(kill_list[row]))
         else:
             heatmap_data_dict_cleaned['Kills'].append(0)
     else:
         index = year_loc_pair_list.index([year_list[row],loc_type_list[row]])
-        for char in kill_list[row]:
-            isnum = True
-            if not char.isdigit():
-                isnum = False
         if isnum:
             heatmap_data_dict_cleaned['Kills'][index] += int(kill_list[row])
     
