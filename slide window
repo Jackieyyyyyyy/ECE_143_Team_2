@@ -1,0 +1,46 @@
+%matplotlib inline
+def silde_window(filename,countryname):
+    '''
+    Created by: Qiaochu Cong
+    first please install bokeh package and related support stuff to ensure it can work
+    filename: 'homicide_report_total_and_sex.xlsx'
+    countryname: 'Pakistan'
+    result: a silde window graph shows how the number and rank changes for pakisitan
+    Please add  %matplotlib inline    first
+    '''
+    assert type(filename)==str
+    assert filename[-4:]=='xlsx'
+    assert type(countryname)==str 
+    # for basic operations
+    import numpy as np 
+    import pandas as pd 
+    import holoviews as hv
+    hv.extension('bokeh')
+    # for data visualizations
+    import matplotlib.pyplot as plt
+    #import seaborn as sns
+    plt.style.use('fivethirtyeight')
+
+     # for knowing the character encoding
+    df_homicide=pd.read_excel(filename)
+    head=df_homicide.values[4,:21]
+    data=df_homicide.iloc[5:234,:21]
+    data.columns=head
+    data= data.replace('nan',np.NaN)
+    data = data.fillna(0)
+    data = data.reindex()
+    names=list(data)[4:]
+    for i in names:
+        data["Rank{}".format(i)] = data[i].rank(ascending=False)
+    pakisitan=data.loc[data['UNODC Name'] == countryname]
+    years=list(range(2000,2017))
+    ranks=list(pakisitan.values)[0][-17:]
+    counts=list(pakisitan.values)[0][4:21]
+    years=list(range(2000,2017))
+    barchart=pd.DataFrame(index=years,columns=['ranks','counts'])
+    barchart.ranks=ranks
+    barchart.counts=counts
+    barchart['year']=years
+    edata = hv.Dataset(data=barchart,kdims=['year'])
+    return edata.sort('year').to(hv.Bars,'ranks')
+
